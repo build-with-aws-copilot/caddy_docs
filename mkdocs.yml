@@ -1,3 +1,20 @@
-site_name: My Docs
+site_name: Building A Custom Domain Server With Caddy And AWS Copilot
 theme:
   name: material
+
+nav:
+  - Overview: index.md
+  - 'About the Author': 'about_the_author.md'
+
+extra:
+  analytics:
+    provider: google
+    property: G-98DMHE2Z0Q
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg

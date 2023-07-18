@@ -1,9 +1,14 @@
 site_name: Building A Custom Domain Server With Caddy And AWS Copilot
 theme:
   name: material
+  features:
+    - content.code.copy
+    - content.code.annotate
 
 nav:
   - Overview: index.md
+  - Creating AWS Network Load Balancer and Caddy instances: network_load_balancer_and_caddy.md
+  - Launching Redis: redis.md
   - 'About the Author': 'about_the_author.md'
 
 extra:
@@ -15,6 +20,13 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true

@@ -8,7 +8,7 @@ theme:
 nav:
   - Overview: index.md
   - Creating AWS Network Load Balancer and Caddy instances: network_load_balancer_and_caddy.md
-  - Launching Redis: redis.md
+  - Creating Redis: redis.md
   - 'About the Author': 'about_the_author.md'
 
 extra:

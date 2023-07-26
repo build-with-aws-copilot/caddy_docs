@@ -1,4 +1,4 @@
-We will use AWS Copilot to build a Network Load Balancer. It cannot be Application Load Balancer or Classic Load Balancer because we need the encrypted traffic to flow through the load balancer to Caddy instances. And then Caddy will be able to do its work.
+We will use AWS Copilot to build a Network Load Balancer. It cannot be Application Load Balancer or Classic Load Balancer because we need the encrypted traffic to flow through the load balancer to Caddy instance. And then Caddy will be able to do its work.
 
 Here's the manifest for building Network Load Balancer using AWS Copilot:
 
@@ -60,15 +60,15 @@ EXPOSE 443
 CMD ["/caddy-build/caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
 ```
 
-Line 12, 13: Building caddy with Redis. So certs can be stored in Redis, and retrieved by multiple Caddy instances.
+Line 12, 13: Building caddy with Redis. So certs can be stored in Redis, and retrieved by Caddy instance.
 
 ## Caddyfile
 Caddyfile is Caddy's config file.
-``` title="Caddyfile" linenums="1" hl_lines="4 12 13 14 16 17 18"
+``` title="Caddyfile" linenums="1" hl_lines="4 12 13 14 16 17 18 19 20"
 {
     debug
     on_demand_tls {
-        ask https://tictactoeonrails.tamsui.xyz/tls_check
+        ask https://portfolio-starter-kit-beta-six.vercel.app/api/tls_authoriser
         
         burst 5
         interval 2m
@@ -80,25 +80,22 @@ https:// {
         on_demand
     }
 
-    reverse_proxy https://tictactoeonrails.tamsui.xyz {
+    reverse_proxy https://portfolio-starter-kit-beta-six.vercel.app {
+        header_down Strict-Transport-Security max-age=31536000
         header_up X-Real-IP {remote}
+        header_up Host {upstream_hostport}
     }
 }
 ```
 Line 4: Caddy will ask the specified endpoint for authorisation, i.e. can Caddy fetch and install a cert for a custom domain? The endpoint must return 200 for allow, and any other statuses (eg 403) for deny. The endpoint, in this case, is a webserver, it can be of other forms like Lambda, as long as it returns 200.
 
 Example of an endpoint:
-``` rb title="tls_check_controller.rb"
-class TlsCheckController < ActionController::Base
-  def check
-    requested_domain = params[:domain] # ?domain=www.clientdomain.com
-
-    return head :ok if requested_domain.owner.paid? # only issue cert when client has paid
-
-    head :forbidden # if client hasn't paid, forbid the generation of cert
-  end
-end
+``` js title="/pages/api/tls_authoriser.js"
+export default function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store, max-age=0')
+  res.status(200).json({})
+}
 ```
 Line 12-14: Cernts are fetched and installed on demand.
 
-Line 16-18: Once a cert is fetched and installed, proxy traffic to your domain.
+Line 16-20: Once a cert is fetched and installed, proxy traffic to original domain.

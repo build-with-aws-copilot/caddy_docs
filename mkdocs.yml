@@ -1,4 +1,6 @@
 site_name: Building A Custom Domain Server With Caddy And AWS Copilot
+repo_url: https://github.com/build-with-aws-copilot/caddy
+repo_name: build-with-aws-copilot/caddy
 theme:
   name: material
   features:
@@ -8,7 +10,8 @@ theme:
 nav:
   - Overview: index.md
   - Provisioning AWS Network Load Balancer and Single Caddy instance: network_load_balancer_and_caddy.md
-  - Creating Redis: redis.md
+  - Upgrading to Caddy Cluster: caddy_cluster.md
+  - Adding a CNAME record to Client's DNS: dns.md
   - 'About the Author': 'about_the_author.md'
 
 extra:

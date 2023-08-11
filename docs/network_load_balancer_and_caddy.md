@@ -2,7 +2,7 @@ We will use AWS Copilot to build a Network Load Balancer. It cannot be Applicati
 
 Here's the manifest for building Network Load Balancer using AWS Copilot:
 
-``` yaml title="manifest.yml" linenums="1" hl_lines="18 19 20 21 22"
+``` yaml title="copilot/nlb/manifest.yml" linenums="1" hl_lines="18 19 20 21 22 28"
 # The manifest for the "caddy-webserver" service.
 # Read the full specification for the "Load Balanced Web Service" type at:
 #  https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
@@ -30,7 +30,7 @@ nlb:
 cpu: 256       # Number of CPU units for the task.
 memory: 512    # Amount of memory in MiB used by the task.
 platform: linux/x86_64  # See https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#platform
-count: 3       # Number of tasks that should be running in your service.
+count: 1       # Number of tasks that should be running in your service.
 exec: true     # Enable running commands in your container.
 network:
   connect: true # Enable Service Connect for intra-environment traffic between services.
